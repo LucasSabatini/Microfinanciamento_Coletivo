@@ -1,5 +1,11 @@
 package com.sabatini.microfinanciamento_coletivo.model;
 
+/**
+ * @author Marco Sabatini
+ * @version 1.01
+ * @since Release 03
+ */
+
 import jakarta.persistence.*;
 
 import java.util.List;
