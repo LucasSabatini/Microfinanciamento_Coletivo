@@ -21,7 +21,7 @@ public class User {
 
     private String sobrenome;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToOne
     private Endereco endereco;
 
     private String cpf;
