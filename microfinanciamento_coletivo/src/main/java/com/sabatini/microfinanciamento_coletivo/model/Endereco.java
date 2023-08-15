@@ -116,7 +116,6 @@ public class Endereco {
     }
 
     // Equals and Hash
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,5 +127,20 @@ public class Endereco {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    // toStrig()
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "id=" + id +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero='" + numero + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cep='" + cep + '\'' +
+                ", user=" + user +
+                ", Organizacao=" + Organizacao +
+                '}';
     }
 }
