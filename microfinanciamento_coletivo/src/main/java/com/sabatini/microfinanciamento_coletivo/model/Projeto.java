@@ -3,6 +3,7 @@ package com.sabatini.microfinanciamento_coletivo.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity

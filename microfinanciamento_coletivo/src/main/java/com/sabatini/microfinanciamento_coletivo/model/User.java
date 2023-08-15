@@ -33,7 +33,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Projeto> projetos;
 
-    @ManyToMany(mappedBy = "user")
+    @ManyToMany
     private List<Organizacao> organizacoes;
 
     // Constructors
