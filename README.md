@@ -1,5 +1,5 @@
 <h1 align="center">
-  TODO List
+  Microfinanciamento Coletivo
 </h1>
 
 API para gerenciar tarefas (CRUD).
