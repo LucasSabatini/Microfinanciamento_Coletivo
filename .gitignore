@@ -45,4 +45,4 @@ gradle-app.setting
 
 # Other
 *.txt
-*.properties
+microfinanciamento_coletivo/src/main/resources/application.properties
