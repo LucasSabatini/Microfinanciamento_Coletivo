@@ -28,14 +28,10 @@ public class Projeto {
     @ManyToMany
     private List<User> userContribuintes;
 
-    @JoinColumn(name = "id_organizacao")
-    @ManyToOne
-    private Organizacao organizacao;
-
     public Projeto() {
     }
 
-    public Projeto(Long id, String nomeProj, String descricaoProj, String area, String objetivo, BigDecimal valorFinal, BigDecimal valorAtual, User userResponsavel, List<User> userContribuintes, Organizacao organizacao) {
+    public Projeto(Long id, String nomeProj, String descricaoProj, String area, String objetivo, BigDecimal valorFinal, BigDecimal valorAtual, User userResponsavel, List<User> userContribuintes) {
         this.id = id;
         this.nomeProj = nomeProj;
         this.descricaoProj = descricaoProj;
@@ -45,7 +41,6 @@ public class Projeto {
         this.valorAtual = valorAtual;
         this.userResponsavel = userResponsavel;
         this.userContribuintes = userContribuintes;
-        this.organizacao = organizacao;
     }
 
     public Long getId() {
@@ -118,14 +113,6 @@ public class Projeto {
 
     public void setUserContribuintes(List<User> userContribuintes) {
         this.userContribuintes = userContribuintes;
-    }
-
-    public Organizacao getOrganizacao() {
-        return organizacao;
-    }
-
-    public void setOrganizacao(Organizacao organizacao) {
-        this.organizacao = organizacao;
     }
 
     @Override

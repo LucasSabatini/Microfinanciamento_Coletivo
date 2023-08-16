@@ -22,6 +22,7 @@ public class User {
     private String sobrenome;
 
     @ManyToOne
+    @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
     private String cpf;
@@ -30,18 +31,15 @@ public class User {
 
     private String celular;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Projeto> projetos;
-
-    @ManyToMany
-    private List<Organizacao> organizacoes;
 
     // Constructors
     public User() {
 
     }
 
-    public User(Long id, String email, String senha, String nome, String sobrenome, Endereco endereco, String cpf, String rg, String celular, List<Projeto> projetos, List<Organizacao> organizacoes) {
+    public User(Long id, String email, String senha, String nome, String sobrenome, Endereco endereco, String cpf, String rg, String celular, List<Projeto> projetos) {
         this.id = id;
         this.email = email;
         this.senha = senha;
@@ -52,7 +50,6 @@ public class User {
         this.rg = rg;
         this.celular = celular;
         this.projetos = projetos;
-        this.organizacoes = organizacoes;
     }
 
     // Getters and Setters
@@ -135,15 +132,6 @@ public class User {
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
     }
-
-    public List<Organizacao> getOrganizacoes() {
-        return organizacoes;
-    }
-
-    public void setOrganizacoes(List<Organizacao> organizacoes) {
-        this.organizacoes = organizacoes;
-    }
-
 
     // Equals and Hashs
 
