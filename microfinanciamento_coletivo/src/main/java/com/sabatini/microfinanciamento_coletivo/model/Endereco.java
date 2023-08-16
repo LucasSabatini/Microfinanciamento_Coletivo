@@ -29,8 +29,8 @@ public class Endereco {
 
     private String cep;
 
-    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
-    private List<User> user;
+//    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
+//    private List<User> user;
 
 
     // Constructors
@@ -38,14 +38,14 @@ public class Endereco {
 
     }
 
-    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep, List<User> user) {
+    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.user = user;
+//        this.user = user;
     }
 
     // Getters and Setters
@@ -98,13 +98,13 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public List<User> getUser() {
-        return user;
-    }
-
-    public void setUser(List<User> user) {
-        this.user = user;
-    }
+//    public List<User> getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(List<User> user) {
+//        this.user = user;
+//    }
 
     // Equals and Hash
     @Override
@@ -130,7 +130,7 @@ public class Endereco {
                 ", complemento='" + complemento + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cep='" + cep + '\'' +
-                ", user=" + user +
+//                ", user=" + user +
                 '}';
     }
 }
