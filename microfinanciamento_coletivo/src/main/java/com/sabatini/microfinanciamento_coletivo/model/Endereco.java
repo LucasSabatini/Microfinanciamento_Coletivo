@@ -29,9 +29,6 @@ public class Endereco {
 
     private String cep;
 
-//    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
-//    private List<User> user;
-
 
     // Constructors
     public Endereco(){
@@ -45,11 +42,9 @@ public class Endereco {
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-//        this.user = user;
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
@@ -98,13 +93,6 @@ public class Endereco {
         this.cep = cep;
     }
 
-//    public List<User> getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(List<User> user) {
-//        this.user = user;
-//    }
 
     // Equals and Hash
     @Override
@@ -130,7 +118,6 @@ public class Endereco {
                 ", complemento='" + complemento + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cep='" + cep + '\'' +
-//                ", user=" + user +
                 '}';
     }
 }
