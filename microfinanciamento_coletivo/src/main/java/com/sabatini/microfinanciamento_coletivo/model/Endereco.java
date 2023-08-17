@@ -8,7 +8,6 @@ package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,23 +28,18 @@ public class Endereco {
 
     private String cep;
 
-    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
-    private List<User> user;
-
-
     // Constructors
     public Endereco(){
 
     }
 
-    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep, List<User> user) {
+    public Endereco(Long id, String logradouro, String numero, String complemento, String bairro, String cep) {
         this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cep = cep;
-        this.user = user;
     }
 
     // Getters and Setters
@@ -98,14 +92,6 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public List<User> getUser() {
-        return user;
-    }
-
-    public void setUser(List<User> user) {
-        this.user = user;
-    }
-
     // Equals and Hash
     @Override
     public boolean equals(Object o) {
@@ -120,7 +106,6 @@ public class Endereco {
         return Objects.hash(id);
     }
 
-    // toStrig()
     @Override
     public String toString() {
         return "Endereco{" +
@@ -130,7 +115,6 @@ public class Endereco {
                 ", complemento='" + complemento + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cep='" + cep + '\'' +
-                ", user=" + user +
                 '}';
     }
 }
