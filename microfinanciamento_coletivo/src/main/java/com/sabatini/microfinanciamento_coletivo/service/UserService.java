@@ -1,7 +1,9 @@
 package com.sabatini.microfinanciamento_coletivo.service;
 
+import com.sabatini.microfinanciamento_coletivo.exceptions.GlobalExceptionHandler;
 import com.sabatini.microfinanciamento_coletivo.model.User;
 import com.sabatini.microfinanciamento_coletivo.repository.UserRepository;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserJaCadastradoException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +22,10 @@ public class UserService {
     }
 
     public void createUser(User user) {
+        if(userRepository.existsUserByEmail(user.getEmail())) {
+            throw new UserJaCadastradoException("Este email já está cadastrado");
+        }
+        user.setId(null);
         userRepository.save(user);
     }
 
