@@ -8,7 +8,6 @@ package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,7 +27,6 @@ public class Endereco {
     private String bairro;
 
     private String cep;
-
 
     // Constructors
     public Endereco(){
@@ -93,7 +91,6 @@ public class Endereco {
         this.cep = cep;
     }
 
-
     // Equals and Hash
     @Override
     public boolean equals(Object o) {
@@ -108,7 +105,6 @@ public class Endereco {
         return Objects.hash(id);
     }
 
-    // toStrig()
     @Override
     public String toString() {
         return "Endereco{" +
