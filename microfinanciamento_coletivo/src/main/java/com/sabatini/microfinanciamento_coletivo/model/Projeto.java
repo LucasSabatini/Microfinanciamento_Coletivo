@@ -21,6 +21,8 @@ public class Projeto {
     private BigDecimal valorFinal;
     private BigDecimal valorAtual;
 
+    private boolean statusFinalizado;
+
     @JoinColumn(name = "id_responsavel")
     @ManyToOne
     private User userResponsavel;
@@ -32,7 +34,17 @@ public class Projeto {
     public Projeto() {
     }
 
-    public Projeto(Long id, String nomeProj, String descricaoProj, String area, String objetivo, BigDecimal valorFinal, BigDecimal valorAtual, User userResponsavel, List<User> userContribuintes) {
+    public Projeto(Long id,
+                   String nomeProj,
+                   String descricaoProj,
+                   String area,
+                   String objetivo,
+                   BigDecimal valorFinal,
+                   BigDecimal valorAtual,
+                   User userResponsavel,
+                   List<User> userContribuintes,
+                   boolean statusFinalizado) {
+
         this.id = id;
         this.nomeProj = nomeProj;
         this.descricaoProj = descricaoProj;
@@ -42,6 +54,7 @@ public class Projeto {
         this.valorAtual = valorAtual;
         this.userResponsavel = userResponsavel;
         this.userContribuintes = userContribuintes;
+        this.statusFinalizado = statusFinalizado;
     }
 
     public Long getId() {
@@ -114,6 +127,14 @@ public class Projeto {
 
     public void setUserContribuintes(List<User> userContribuintes) {
         this.userContribuintes = userContribuintes;
+    }
+
+    public boolean isStatusFinalizado() {
+        return statusFinalizado;
+    }
+
+    public void setStatusFinalizado(boolean status) {
+        this.statusFinalizado = status;
     }
 
     @Override
