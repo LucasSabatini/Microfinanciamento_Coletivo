@@ -43,7 +43,6 @@ public class Endereco {
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
