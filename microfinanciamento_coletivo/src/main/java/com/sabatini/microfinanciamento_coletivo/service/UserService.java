@@ -1,9 +1,10 @@
 package com.sabatini.microfinanciamento_coletivo.service;
 
-import com.sabatini.microfinanciamento_coletivo.exceptions.GlobalExceptionHandler;
 import com.sabatini.microfinanciamento_coletivo.model.User;
 import com.sabatini.microfinanciamento_coletivo.repository.UserRepository;
-import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserJaCadastradoException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,14 +24,17 @@ public class UserService {
 
     public void createUser(User user) {
         if(userRepository.existsUserByEmail(user.getEmail())) {
-            throw new UserJaCadastradoException("Este email já está cadastrado");
+            throw new DataIntegrityViolationException("Este email já está cadastrado");
+        }
+        if(user.getSenha().length() < 8 || user.getSenha().length() > 60) {
+            throw new DataBindingViolationException("Sua senha deve conter entre 8 e 60 dígitos.");
         }
         user.setId(null);
         userRepository.save(user);
     }
 
     public void updateUser(Long id, User user) {
-        User userToUpdate = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Id não encontrado!"));
+        User userToUpdate = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
         if(user.getEmail() != null && !user.getEmail().isEmpty()) userToUpdate.setEmail(user.getEmail());
         if(user.getSenha() != null && !user.getSenha().isEmpty()) userToUpdate.setSenha(user.getSenha());
         if(user.getNome() != null && !user.getNome().isEmpty()) userToUpdate.setNome(user.getNome());
@@ -44,7 +48,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        User userToDelete = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Id não encontrado!"));
+        User userToDelete = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
         userRepository.delete(userToDelete);
     }
 }

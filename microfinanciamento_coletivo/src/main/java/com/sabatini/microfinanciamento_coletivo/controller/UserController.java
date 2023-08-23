@@ -2,6 +2,7 @@ package com.sabatini.microfinanciamento_coletivo.controller;
 
 import com.sabatini.microfinanciamento_coletivo.model.User;
 import com.sabatini.microfinanciamento_coletivo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping(path = "/user")
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
