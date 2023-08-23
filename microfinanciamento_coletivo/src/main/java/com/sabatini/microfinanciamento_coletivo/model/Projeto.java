@@ -1,6 +1,8 @@
 package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,14 +16,27 @@ public class Projeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
     private String nomeProj;
+
+    @NotBlank
     private String descricaoProj;
+
+    @NotBlank
     private String area;
+
+    @NotBlank
     private String objetivo;
+
+    @NotNull
     private BigDecimal valorFinal;
+
+    @NotNull
     private BigDecimal valorAtual;
 
-    private boolean statusFinalizado;
+    @NotNull
+    private Boolean statusFinalizado = false;
 
     @JoinColumn(name = "id_responsavel")
     @ManyToOne
@@ -42,8 +57,7 @@ public class Projeto {
                    BigDecimal valorFinal,
                    BigDecimal valorAtual,
                    User userResponsavel,
-                   List<User> userContribuintes,
-                   boolean statusFinalizado) {
+                   List<User> userContribuintes) {
 
         this.id = id;
         this.nomeProj = nomeProj;
@@ -54,7 +68,6 @@ public class Projeto {
         this.valorAtual = valorAtual;
         this.userResponsavel = userResponsavel;
         this.userContribuintes = userContribuintes;
-        this.statusFinalizado = statusFinalizado;
     }
 
     public Long getId() {
