@@ -1,5 +1,6 @@
 package com.sabatini.microfinanciamento_coletivo.exceptions;
 
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.ObjectNotFoundException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +14,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler{
 
     @Value("${server.error.include-exception}")
     private boolean printStrackTrace;
 
 
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     protected ResponseEntity<Object> handlerMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,
@@ -52,7 +53,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildErrorResponse(exception, errorMessage, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
-
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<Object> handlerDataIntegrityViolationException(
@@ -76,8 +76,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildErrorResponse(constraintViolationException,
                 HttpStatus.UNPROCESSABLE_ENTITY,
                 request);
-
     }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handlerObjectNotFoundException(
+            ObjectNotFoundException objectNotFoundException,
+            WebRequest request){
+
+        return buildErrorResponse(objectNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
 
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
