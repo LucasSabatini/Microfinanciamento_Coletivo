@@ -1,8 +1,9 @@
 package com.sabatini.microfinanciamento_coletivo.exceptions;
 
-import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserJaCadastradoException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
@@ -14,14 +15,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     @Value("${server.error.include-exception}")
     private boolean printStackTrace;
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,
@@ -50,14 +51,49 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 request);
     }
 
-    @ExceptionHandler(UserJaCadastradoException.class)
+    @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<Object> handleUserJaCadastradoException(
-            UserJaCadastradoException userJaCadastradoException,
+    public ResponseEntity<Object> handleConstraintViolationException(
+            ConstraintViolationException constraintViolationException,
             WebRequest request) {
         return buildErrorResponse(
-                userJaCadastradoException,
+                constraintViolationException,
                 HttpStatus.UNPROCESSABLE_ENTITY,
+                request);
+    }
+
+    @ExceptionHandler(DataBindingViolationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<Object> handleUserJaCadastradoException(
+            DataBindingViolationException dataBindingViolationException,
+            WebRequest request) {
+        return buildErrorResponse(
+                dataBindingViolationException,
+                HttpStatus.UNPROCESSABLE_ENTITY,
+                request);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleUserNotFoundException(
+            UserNotFoundException userNotFoundException,
+            WebRequest request) {
+        return buildErrorResponse(
+                userNotFoundException,
+                HttpStatus.NOT_FOUND,
+                request);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(
+            DataIntegrityViolationException dataIntegrityViolationException,
+            WebRequest request) {
+        String errorMessage = dataIntegrityViolationException.getMostSpecificCause().getMessage();
+        return buildErrorResponse(
+                dataIntegrityViolationException,
+                errorMessage,
+                HttpStatus.CONFLICT,
                 request);
     }
 
@@ -80,27 +116,4 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildErrorResponse(exception, exception.getMessage(), httpStatus, request);
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ResponseEntity<Object> handleDataIntegrityViolationException(
-            DataIntegrityViolationException dataIntegrityViolationException,
-            WebRequest request) {
-        String errorMessage = dataIntegrityViolationException.getMostSpecificCause().getMessage();
-        return buildErrorResponse(
-                dataIntegrityViolationException,
-                errorMessage,
-                HttpStatus.CONFLICT,
-                request);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ResponseEntity<Object> handleConstraintViolationException(
-            ConstraintViolationException constraintViolationException,
-            WebRequest request) {
-        return buildErrorResponse(
-                constraintViolationException,
-                HttpStatus.UNPROCESSABLE_ENTITY,
-                request);
-    }
 }

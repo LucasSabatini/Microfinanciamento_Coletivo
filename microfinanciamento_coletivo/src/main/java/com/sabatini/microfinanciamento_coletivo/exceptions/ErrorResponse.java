@@ -55,7 +55,7 @@ public class ErrorResponse {
 
     public List<ValidationError> getErrors() {
         return errors;
-    }
+    } //refatorar visibilidade...
 
     public void setErrors(List<ValidationError> errors) {
         this.errors = errors;
