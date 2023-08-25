@@ -18,7 +18,6 @@ public class ProjetoService {
     }
 
     // Métodos
-
     public Projeto getProjetoId(Long id) {
         Optional<Projeto> projeto = this.projetoRepository.findById(id);
         return projeto.orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
@@ -34,16 +33,35 @@ public class ProjetoService {
     }
 
 
-    // REFATORAR: acrescentar os SETs para o parâmetro Projeto projeto
     public Projeto atualizarProjeto(Long id, Projeto projeto) {
 
-        Projeto atualizarProjeto = projetoRepository
+        Projeto atualizarProj = projetoRepository
                 .findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
 
-        projetoRepository.save(atualizarProjeto);
-        return atualizarProjeto;
 
+        if((projeto.getNomeProj() != null) || !projeto.getNomeProj().isEmpty())
+            atualizarProj.setNomeProj(projeto.getNomeProj());
+
+        if((projeto.getDescricaoProj() != null) && !projeto.getDescricaoProj().isEmpty())
+            atualizarProj.setDescricaoProj(projeto.getDescricaoProj());
+
+        if((projeto.getArea() != null) && !projeto.getArea().isEmpty())
+            atualizarProj.setArea(projeto.getArea());
+
+        if((projeto.getObjetivo() != null) && !projeto.getObjetivo().isEmpty())
+            atualizarProj.setObjetivo(projeto.getObjetivo());
+
+        // O usuário poderá alterar o valor final??????????
+        if(projeto.getValorFinal() != null)
+            atualizarProj.setValorFinal(projeto.getValorFinal());
+
+        if(projeto.isStatusFinalizado())
+            atualizarProj.setStatusFinalizado(projeto.isStatusFinalizado());
+
+
+        projetoRepository.save(atualizarProj);
+        return atualizarProj;
     }
 
     public void excluirProjeto(Long id) {
@@ -57,12 +75,11 @@ public class ProjetoService {
                 projetoRepository.findById(id)
                         .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado"));
             }
-        } else{
-
+        } else {
             // REFATORAR: não é Not_Found, é Conflict
+            // PAROOOU DE FUNCIONAR
             projetoRepository.findById(id)
                     .orElseThrow(() -> new ObjectNotFoundException("Finalize o projeto antes de excluí-lo."));
         }
-
     }
 }

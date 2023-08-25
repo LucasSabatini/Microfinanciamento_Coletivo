@@ -3,6 +3,7 @@ package com.sabatini.microfinanciamento_coletivo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,25 +18,18 @@ public class Projeto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String nomeProj;
 
-    @NotBlank
     private String descricaoProj;
 
-    @NotBlank
     private String area;
 
-    @NotBlank
     private String objetivo;
 
-    @NotNull
     private BigDecimal valorFinal;
 
-    @NotNull
     private BigDecimal valorAtual;
 
-    @NotNull
     private Boolean statusFinalizado = false;
 
     @JoinColumn(name = "id_responsavel")

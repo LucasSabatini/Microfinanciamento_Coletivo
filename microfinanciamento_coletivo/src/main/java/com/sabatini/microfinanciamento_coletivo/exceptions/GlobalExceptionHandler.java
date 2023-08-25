@@ -23,7 +23,6 @@ public class GlobalExceptionHandler{
     private boolean printStrackTrace;
 
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     protected ResponseEntity<Object> handlerMethodArgumentNotValid(
@@ -86,7 +85,6 @@ public class GlobalExceptionHandler{
 
         return buildErrorResponse(objectNotFoundException, HttpStatus.NOT_FOUND, request);
     }
-
 
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
