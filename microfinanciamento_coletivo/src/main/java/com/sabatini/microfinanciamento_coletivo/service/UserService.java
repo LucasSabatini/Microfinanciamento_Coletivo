@@ -39,6 +39,8 @@ public class UserService {
         if(user.getEmail() != null && !user.getEmail().isEmpty()) userToUpdate.setEmail(user.getEmail());
         if(user.getSenha().length() < 8 || user.getSenha().length() > 60) {
             throw new DataBindingViolationException("Sua senha deve conter entre 8 e 60 dígitos.");
+        } else {
+            userToUpdate.setSenha(user.getSenha());
         }
         if(user.getNome() != null && !user.getNome().isEmpty()) userToUpdate.setNome(user.getNome());
         if(user.getSobrenome() != null && !user.getSobrenome().isEmpty()) userToUpdate.setSobrenome(user.getSobrenome());
