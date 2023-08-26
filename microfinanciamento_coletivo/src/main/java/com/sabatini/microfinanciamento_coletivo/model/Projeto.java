@@ -1,10 +1,6 @@
 package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +46,7 @@ public class Projeto {
                    String objetivo,
                    BigDecimal valorFinal,
                    BigDecimal valorAtual,
+                   boolean statusFinalizado,
                    User userResponsavel,
                    List<User> userContribuintes) {
 
@@ -60,6 +57,7 @@ public class Projeto {
         this.objetivo = objetivo;
         this.valorFinal = valorFinal;
         this.valorAtual = valorAtual;
+        this.statusFinalizado = statusFinalizado;
         this.userResponsavel = userResponsavel;
         this.userContribuintes = userContribuintes;
     }

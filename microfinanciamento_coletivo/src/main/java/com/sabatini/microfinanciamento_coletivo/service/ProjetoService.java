@@ -2,6 +2,7 @@ package com.sabatini.microfinanciamento_coletivo.service;
 
 import com.sabatini.microfinanciamento_coletivo.model.Projeto;
 import com.sabatini.microfinanciamento_coletivo.repository.ProjetoRepository;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
 import com.sabatini.microfinanciamento_coletivo.service.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +24,17 @@ public class ProjetoService {
         return projeto.orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
     }
 
-//    public Projeto getProjetoNome(String nomeProj){
-//        Optional<Projeto> projeto = this.projetoRepository.findAllByNomeProj(nomeProj);
-//        return projeto.orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
-//    }
+    // INCLUIR método de busca por nome
 
     public void cadastrarProjeto(Projeto projeto) {
         projetoRepository.save(projeto);
     }
-
 
     public Projeto atualizarProjeto(Long id, Projeto projeto) {
 
         Projeto atualizarProj = projetoRepository
                 .findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
-
 
         if((projeto.getNomeProj() != null) || !projeto.getNomeProj().isEmpty())
             atualizarProj.setNomeProj(projeto.getNomeProj());
@@ -59,27 +55,20 @@ public class ProjetoService {
         if(projeto.isStatusFinalizado())
             atualizarProj.setStatusFinalizado(projeto.isStatusFinalizado());
 
-
         projetoRepository.save(atualizarProj);
         return atualizarProj;
     }
 
     public void excluirProjeto(Long id) {
 
-        Projeto projeto = projetoRepository.findById(id).get();
+        Projeto projeto = projetoRepository
+                .findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado"));
 
         if(projeto.isStatusFinalizado()){
-            if (projetoRepository.findById(id).isPresent()) {
-                projetoRepository.deleteById(id);
-            } else {
-                projetoRepository.findById(id)
-                        .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado"));
-            }
+            projetoRepository.delete(projeto);
         } else {
-            // REFATORAR: não é Not_Found, é Conflict
-            // PAROOOU DE FUNCIONAR
-            projetoRepository.findById(id)
-                    .orElseThrow(() -> new ObjectNotFoundException("Finalize o projeto antes de excluí-lo."));
+            throw new DataBindingViolationException("Finalize o projeto antes de excluí-lo.");
         }
     }
 }

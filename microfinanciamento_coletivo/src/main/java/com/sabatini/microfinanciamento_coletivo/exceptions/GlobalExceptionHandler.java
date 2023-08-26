@@ -1,5 +1,6 @@
 package com.sabatini.microfinanciamento_coletivo.exceptions;
 
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
 import com.sabatini.microfinanciamento_coletivo.service.exceptions.ObjectNotFoundException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
@@ -84,6 +85,18 @@ public class GlobalExceptionHandler{
             WebRequest request){
 
         return buildErrorResponse(objectNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(DataBindingViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleDataBindingViolationException(
+            DataBindingViolationException dataBindingViolationException,
+            WebRequest request) {
+
+        return buildErrorResponse(
+                dataBindingViolationException,
+                HttpStatus.CONFLICT,
+                request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(
