@@ -11,7 +11,7 @@ public class ErrorResponse {
 
     private final int status;
     private final String message;
-    private String stacktrace;
+    private String stackTrace;
     private List<ValidationError> errors;
 
     private static class ValidationError {
@@ -45,12 +45,12 @@ public class ErrorResponse {
         return message;
     }
 
-    public String getStacktrace() {
-        return stacktrace;
+    public String getStackTrace() {
+        return stackTrace;
     }
 
-    public void setStacktrace(String stacktrace) {
-        this.stacktrace = stacktrace;
+    public void setStackTrace(String stackTrace) {
+        this.stackTrace = stackTrace;
     }
 
     public List<ValidationError> getErrors() {

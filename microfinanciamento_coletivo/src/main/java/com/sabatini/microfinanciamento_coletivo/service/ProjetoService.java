@@ -2,7 +2,11 @@ package com.sabatini.microfinanciamento_coletivo.service;
 
 import com.sabatini.microfinanciamento_coletivo.model.Projeto;
 import com.sabatini.microfinanciamento_coletivo.repository.ProjetoRepository;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProjetoService {
@@ -15,46 +19,56 @@ public class ProjetoService {
     }
 
     // Métodos
-
-    public Projeto getProjeto(Long id) {
-        return projetoRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
+    public Projeto getProjetoId(Long id) {
+        Optional<Projeto> projeto = this.projetoRepository.findById(id);
+        return projeto.orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
     }
+
+    // INCLUIR método de busca por nome
 
     public void cadastrarProjeto(Projeto projeto) {
         projetoRepository.save(projeto);
     }
 
-
     public Projeto atualizarProjeto(Long id, Projeto projeto) {
 
-        Projeto atualizarProjeto = projetoRepository
+        Projeto atualizarProj = projetoRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("Projeto não encontrado"));
+                .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado."));
 
-        if (projeto.getNomeProj() != null)
-            atualizarProjeto.setNomeProj(projeto.getNomeProj());
+        if((projeto.getNomeProj() != null) || !projeto.getNomeProj().isEmpty())
+            atualizarProj.setNomeProj(projeto.getNomeProj());
 
-        if (projeto.getDescricaoProj() != null)
-            atualizarProjeto.setDescricaoProj(projeto.getDescricaoProj());
+        if((projeto.getDescricaoProj() != null) && !projeto.getDescricaoProj().isEmpty())
+            atualizarProj.setDescricaoProj(projeto.getDescricaoProj());
 
-        if (projeto.getArea() != null)
-            atualizarProjeto.setArea(projeto.getArea());
+        if((projeto.getArea() != null) && !projeto.getArea().isEmpty())
+            atualizarProj.setArea(projeto.getArea());
 
-        if (projeto.getObjetivo() != null)
-            atualizarProjeto.setObjetivo(projeto.getObjetivo());
+        if((projeto.getObjetivo() != null) && !projeto.getObjetivo().isEmpty())
+            atualizarProj.setObjetivo(projeto.getObjetivo());
 
-        if (projeto.getValorFinal() != null)
-            atualizarProjeto.setValorFinal(projeto.getValorFinal());
+        // O usuário poderá alterar o valor final??????????
+        if(projeto.getValorFinal() != null)
+            atualizarProj.setValorFinal(projeto.getValorFinal());
 
-        if (projeto.getValorAtual() != null)
-            atualizarProjeto.setValorAtual(projeto.getValorAtual());
+        if(projeto.isStatusFinalizado())
+            atualizarProj.setStatusFinalizado(projeto.isStatusFinalizado());
 
-        projetoRepository.save(atualizarProjeto);
-        return atualizarProjeto;
-
+        projetoRepository.save(atualizarProj);
+        return atualizarProj;
     }
 
     public void excluirProjeto(Long id) {
-        Projeto excluirProjeto = projetoRepository.findById(id).orElseThrow(() -> new RuntimeException("Não existe o projeto."));
+
+        Projeto projeto = projetoRepository
+                .findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Projeto não encontrado"));
+
+        if(projeto.isStatusFinalizado()){
+            projetoRepository.delete(projeto);
+        } else {
+            throw new DataBindingViolationException("Finalize o projeto antes de excluí-lo.");
+        }
     }
 }

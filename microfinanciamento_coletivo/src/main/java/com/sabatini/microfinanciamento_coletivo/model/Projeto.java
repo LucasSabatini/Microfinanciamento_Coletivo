@@ -1,7 +1,6 @@
 package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -14,12 +13,20 @@ public class Projeto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nomeProj;
+
     private String descricaoProj;
+
     private String area;
+
     private String objetivo;
+
     private BigDecimal valorFinal;
+
     private BigDecimal valorAtual;
+
+    private Boolean statusFinalizado = false;
 
     @JoinColumn(name = "id_responsavel")
     @ManyToOne
@@ -32,7 +39,17 @@ public class Projeto {
     public Projeto() {
     }
 
-    public Projeto(Long id, String nomeProj, String descricaoProj, String area, String objetivo, BigDecimal valorFinal, BigDecimal valorAtual, User userResponsavel, List<User> userContribuintes) {
+    public Projeto(Long id,
+                   String nomeProj,
+                   String descricaoProj,
+                   String area,
+                   String objetivo,
+                   BigDecimal valorFinal,
+                   BigDecimal valorAtual,
+                   boolean statusFinalizado,
+                   User userResponsavel,
+                   List<User> userContribuintes) {
+
         this.id = id;
         this.nomeProj = nomeProj;
         this.descricaoProj = descricaoProj;
@@ -40,6 +57,7 @@ public class Projeto {
         this.objetivo = objetivo;
         this.valorFinal = valorFinal;
         this.valorAtual = valorAtual;
+        this.statusFinalizado = statusFinalizado;
         this.userResponsavel = userResponsavel;
         this.userContribuintes = userContribuintes;
     }
@@ -114,6 +132,14 @@ public class Projeto {
 
     public void setUserContribuintes(List<User> userContribuintes) {
         this.userContribuintes = userContribuintes;
+    }
+
+    public boolean isStatusFinalizado() {
+        return statusFinalizado;
+    }
+
+    public void setStatusFinalizado(boolean status) {
+        this.statusFinalizado = status;
     }
 
     @Override

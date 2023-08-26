@@ -1,6 +1,7 @@
 package com.sabatini.microfinanciamento_coletivo.exceptions;
 
 import com.sabatini.microfinanciamento_coletivo.service.exceptions.DataBindingViolationException;
+import com.sabatini.microfinanciamento_coletivo.service.exceptions.ObjectNotFoundException;
 import com.sabatini.microfinanciamento_coletivo.service.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -16,23 +17,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler{
 
     @Value("${server.error.include-exception}")
-    private boolean printStackTrace;
+    private boolean printStrackTrace;
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+    protected ResponseEntity<Object> handlerMethodArgumentNotValid(
             MethodArgumentNotValidException methodArgumentNotValidException,
             HttpHeaders headers,
             HttpStatus status,
-            WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                "Validation error. Check 'errors' field for details.");
-        for (FieldError fieldError : methodArgumentNotValidException.getBindingResult().getFieldErrors()) {
+            WebRequest request){
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                "Erro de validação. Cheque o campo 'errors' para mais detalhes");
+
+        for(FieldError fieldError: methodArgumentNotValidException.getBindingResult().getFieldErrors()){
             errorResponse.addValidationError(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return ResponseEntity.unprocessableEntity().body(errorResponse);
@@ -40,10 +43,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleAllUncaughtException(
+    public ResponseEntity<Object> handlerAllUncaughtException(
             Exception exception,
-            WebRequest request) {
-        final String errorMessage = "Unknown error occurred";
+            WebRequest request){
+
+        final String errorMessage = "Ocorreu um erro desconhecido.";
+
         return buildErrorResponse(
                 exception,
                 errorMessage,
@@ -73,6 +78,15 @@ public class GlobalExceptionHandler {
                 request);
     }
 
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handlerObjectNotFoundException(
+            ObjectNotFoundException objectNotFoundException,
+            WebRequest request){
+
+        return buildErrorResponse(objectNotFoundException, HttpStatus.NOT_FOUND, request);
+    }
+  
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> handleUserNotFoundException(
@@ -93,27 +107,31 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(
                 dataIntegrityViolationException,
                 errorMessage,
+
                 HttpStatus.CONFLICT,
                 request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
-            String message,
             HttpStatus httpStatus,
-            WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(httpStatus.value(), message);
-        if(this.printStackTrace) {
-            errorResponse.setStacktrace(ExceptionUtils.getStackTrace(exception));
-        }
-        return ResponseEntity.status(httpStatus).body(errorResponse);
+            WebRequest request){
+
+        return buildErrorResponse(exception, exception.getMessage(), httpStatus, request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(
             Exception exception,
+            String message,
             HttpStatus httpStatus,
-            WebRequest request) {
-        return buildErrorResponse(exception, exception.getMessage(), httpStatus, request);
-    }
+            WebRequest request){
 
+        ErrorResponse errorResponse = new ErrorResponse(httpStatus.value(), message);
+
+        if(this.printStrackTrace){
+            errorResponse.setStackTrace(ExceptionUtils.getStackTrace(exception));
+        }
+
+        return ResponseEntity.status(httpStatus).body(errorResponse);
+    }
 }

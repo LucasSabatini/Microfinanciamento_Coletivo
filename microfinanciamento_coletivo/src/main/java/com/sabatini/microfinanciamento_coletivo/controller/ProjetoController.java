@@ -13,12 +13,12 @@ import java.net.URI;
 public class ProjetoController {
 
 
-    private ProjetoService projetoService;
+    private final ProjetoService projetoService;
 
     // Métodos
     @GetMapping(path = "/{idProjeto}")
     public ResponseEntity<Projeto> consultarProjetoPorId(@PathVariable Long idProjeto){
-        return ResponseEntity.ok().body(projetoService.getProjeto(idProjeto));
+        return ResponseEntity.ok().body(projetoService.getProjetoId(idProjeto));
     }
 
     @PostMapping(path = "/cadastro")
@@ -36,7 +36,6 @@ public class ProjetoController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Projeto> atualizarProjetoTotalmente(@PathVariable Long id, @RequestBody Projeto projeto){
-        projetoService.cadastrarProjeto(projeto);
 
         return ResponseEntity.ok(projetoService.atualizarProjeto(id, projeto));
     }
