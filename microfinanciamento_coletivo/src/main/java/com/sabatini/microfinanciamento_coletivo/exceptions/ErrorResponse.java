@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
 
@@ -14,6 +13,24 @@ public class ErrorResponse {
     private final String message;
     private String stackTrace;
     private List<ValidationError> errors;
+
+    private static class ValidationError {
+        private final String field;
+        private final String message;
+
+        public ValidationError(String field, String message) {
+            this.field = field;
+            this.message = message;
+        }
+
+        public String getField() {
+            return field;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 
     public ErrorResponse(int status, String message) {
         this.status = status;
@@ -38,34 +55,15 @@ public class ErrorResponse {
 
     public List<ValidationError> getErrors() {
         return errors;
-    }
+    } //refatorar visibilidade...
 
     public void setErrors(List<ValidationError> errors) {
         this.errors = errors;
     }
 
-    // ValidationsError
-    private static class ValidationError{
-        private final String field;
-        private final String message;
-
-        public ValidationError(String field, String message){
-            this.field = field;
-            this.message = message;
-        }
-
-        public String getField(){
-            return getField();
-        }
-
-        public String getMessage(){
-            return getMessage();
-        }
-    }
-
-    public void addValidationError(String field, String message){
-        if(Objects.isNull(errors)){
-            this.errors = new ArrayList<ValidationError>();
+    public void addValidationError(String field, String message) {
+        if(Objects.isNull(errors)) {
+            this.errors = new ArrayList<>();
         }
         this.errors.add(new ValidationError(field, message));
     }

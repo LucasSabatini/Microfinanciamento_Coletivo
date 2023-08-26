@@ -1,6 +1,10 @@
 package com.sabatini.microfinanciamento_coletivo.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +17,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 60)
     private String email;
 
+    @NotBlank
+    @Size(min = 8, max = 60)
     private String senha;
 
     private String nome;
