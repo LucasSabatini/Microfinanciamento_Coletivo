@@ -23,6 +23,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
+    }
+
     public void createUser(User user) {
         if(userRepository.existsUserByEmail(user.getEmail())) {
             throw new DataIntegrityViolationException("Este email já está cadastrado");

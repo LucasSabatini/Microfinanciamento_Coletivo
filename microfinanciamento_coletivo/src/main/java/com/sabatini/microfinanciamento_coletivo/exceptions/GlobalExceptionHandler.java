@@ -19,7 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 
 
 @RestControllerAdvice
-public class GlobalExceptionHandler{
+public class GlobalExceptionHandler {
 
     @Value("${server.error.include-exception}")
     private boolean printStrackTrace;

@@ -3,8 +3,6 @@ package com.sabatini.microfinanciamento_coletivo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,18 +23,23 @@ public class User {
     @Size(min = 8, max = 60)
     private String senha;
 
+    @NotBlank
     private String nome;
 
+    @NotBlank
     private String sobrenome;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
+    @NotBlank
     private String cpf;
 
+    @NotBlank
     private String rg;
 
+    @NotBlank
     private String celular;
 
     @OneToMany

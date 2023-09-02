@@ -2,7 +2,6 @@ package com.sabatini.microfinanciamento_coletivo.controller;
 
 import com.sabatini.microfinanciamento_coletivo.model.User;
 import com.sabatini.microfinanciamento_coletivo.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +24,12 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers() {
         List<User> usersList = userService.getAllUsers();
         return ResponseEntity.ok().body(usersList);
+    }
+
+    @GetMapping(path = "{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping
