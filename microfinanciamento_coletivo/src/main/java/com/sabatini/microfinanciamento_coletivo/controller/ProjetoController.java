@@ -7,15 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(path ="/projeto")
 public class ProjetoController {
 
-
     private final ProjetoService projetoService;
 
     // Métodos
+    @GetMapping
+    public ResponseEntity<List<Projeto>> listaTodosOsProjetos(){
+        List<Projeto> projetosList = projetoService.getProjetosAll();
+        return ResponseEntity.ok().body(projetosList);
+    }
+
     @GetMapping(path = "/{idProjeto}")
     public ResponseEntity<Projeto> consultarProjetoPorId(@PathVariable Long idProjeto){
         return ResponseEntity.ok().body(projetoService.getProjetoId(idProjeto));

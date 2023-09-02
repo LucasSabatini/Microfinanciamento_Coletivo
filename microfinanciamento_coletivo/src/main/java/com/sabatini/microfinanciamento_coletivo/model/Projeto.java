@@ -47,8 +47,7 @@ public class Projeto {
                    BigDecimal valorFinal,
                    BigDecimal valorAtual,
                    boolean statusFinalizado,
-                   User userResponsavel,
-                   List<User> userContribuintes) {
+                   User userResponsavel) {
 
         this.id = id;
         this.nomeProj = nomeProj;
@@ -59,7 +58,6 @@ public class Projeto {
         this.valorAtual = valorAtual;
         this.statusFinalizado = statusFinalizado;
         this.userResponsavel = userResponsavel;
-        this.userContribuintes = userContribuintes;
     }
 
     public Long getId() {
