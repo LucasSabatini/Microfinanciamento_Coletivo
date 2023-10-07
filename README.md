@@ -70,6 +70,12 @@ Para fazer as requisições HTTP abaixo, foi utilizada a ferramenta [postman](ht
 
 <img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Atualizar%20Usuario.png">
 
+## Testes Automatizados
+
+- UserControllerTest
+
+<img src="">
+
 - Deletar Usuário
 
 <img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Deletar%20Usuario.png">
