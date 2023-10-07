@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "6557ed0f-98e4-45d2-800a-53896f883652",
+		"name": "Microfinanciamento_Coletivo/projetos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23882964"
+	},
+	"item": [
+		{
+			"name": "getProjectById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/projeto/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projeto",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProject",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nomeProj\": \"ProjTeste\",\r\n    \"descricaoProj\": \"testedesc\",\r\n    \"area\": \"testearea\",\r\n    \"objetivo\": \"testeobj\",\r\n    \"valorFinal\": \"152\",\r\n    \"valorAtual\": \"52\",\r\n    \"statusFinalizado\": false,\r\n    \"userResponsavel\": \"\",\r\n    \"userContribuintes\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/projeto/cadastro",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projeto",
+						"cadastro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProject",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nomeProj\": \"Testeteste\",\r\n    \"descricaoProj\": \"testedesc\",\r\n    \"area\": \"123\",\r\n    \"objetivo\": \"testeobj\",\r\n    \"valorFinal\": \"444\",\r\n    \"valorAtual\": \"88\",\r\n    \"statusFinalizado\": false,\r\n    \"userContribuintes\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/projeto/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projeto",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProject",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/projeto/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"projeto",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
