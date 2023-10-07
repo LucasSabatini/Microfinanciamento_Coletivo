@@ -3,14 +3,13 @@ package com.sabatini.microfinanciamento_coletivo.controller;
 import com.sabatini.microfinanciamento_coletivo.model.User;
 import com.sabatini.microfinanciamento_coletivo.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path = "/user")
 public class UserController {
 
@@ -40,9 +39,8 @@ public class UserController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody User user) {
-        userService.updateUser(id, user);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        return ResponseEntity.ok(userService.updateUser(id, user));
     }
 
     @DeleteMapping(path = "{id}")

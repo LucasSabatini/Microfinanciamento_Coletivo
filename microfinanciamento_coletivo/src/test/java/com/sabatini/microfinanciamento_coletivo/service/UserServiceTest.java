@@ -35,8 +35,7 @@ public class UserServiceTest {
 
     User user1 = new User(1L, "user1@teste.com", "123456789", "Teste1", "Unitario", endereco, "123.412.453-45", "1232312312", "1199898598", projeto);
     User user2 = new User(2L, "user2@teste.com", "123456789", "Teste2", "Unitario", endereco, "123.412.453-45", "1232312312", "1199898598", projeto);
-    User user3 = new User(3L, "user3@teste.com", "123456789", "Teste3", "Unitario", endereco, "123.412.453-45", "1232312312", "1199898598", projeto);
-    List<User> usersList = Arrays.asList(user1, user2, user3);
+    List<User> usersList = Arrays.asList(user1, user2);
     User updatedUser = new User();
 
     @Test
