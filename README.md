@@ -86,4 +86,4 @@ Para fazer as requisições HTTP abaixo, foi utilizada a ferramenta [postman](ht
 
 - ProjetoServiceTest
 
-<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/ProjetoServiceTest.png.png">
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/ProjetoServiceTest.png">
