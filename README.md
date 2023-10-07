@@ -87,3 +87,13 @@ Para fazer as requisições HTTP abaixo, foi utilizada a ferramenta [postman](ht
 - ProjetoServiceTest
 
 <img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/ProjetoServiceTest.png">
+
+## Ramificações Git
+
+- Git Log #1
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/GitLog%231.png">
+
+- Git Log #2
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/GitLog%232.png">
