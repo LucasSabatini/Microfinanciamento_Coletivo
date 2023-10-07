@@ -28,6 +28,8 @@ O projeto é uma API RESTful desenvolvida com o objetivo de fornecer uma interfa
 
 ## Como Executar
 
+*Não se esqueça de configurar o arquivo application.properties com as informações de seu banco de dados.*
+
 - Clonar repositório git
 - Construir o projeto:
 ```
@@ -46,25 +48,26 @@ $ mvn spring-boot:run
 
 ## API Endpoints
 
-Para fazer as requisições HTTP abaixo, foi utilizada a ferramenta [postman](https://www.postman.com/):
+Para fazer as requisições HTTP abaixo, foi utilizada a ferramenta [postman](https://www.postman.com/). Na pasta [RecursosPostman](https://github.com/LucasSabatini/Microfinanciamento_Coletivo/tree/master/RecursosPostman), você pode encontrar duas Collections no formato JSON com todas as requisições já prontas para uso, apenas importe-as dentro do seu Workspace no Postman:
 
-# (ATENÇÃO: colocar prints do postman com os métodos abaixo)
-- Criar Tarefa
-```
-POST
-```
+### Camada de Usuário
 
-- Listar Tarefas
-```
-GET
-```
+- Registrar Usuário
 
-- Atualizar Tarefa
-```
-UPDATE
-```
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Cadastrar%20Usuario.png">
 
-- Remover Tarefa
-```
-DELETE
-```
+- Consultar Todos os Usuários
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Consultar%20Todos%20os%20Usuarios.png">
+
+- Consultar Usuário por Id
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Consultar%20Usuario%20por%20Id.png">
+
+- Atualizar Usuário
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Atualizar%20Usuario.png">
+
+- Deletar Usuário
+
+<img src="https://github.com/LucasSabatini/Microfinanciamento_Coletivo/blob/master/RecursosPostman/Deletar%20Usuario.png">
